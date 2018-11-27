@@ -8,6 +8,10 @@ finalString = ""
 f = open('output', 'w')
 count = 1
 
+finalString += "Country," + "Name," + "Age," + "PlayingRole," + "BattingStyle," + "BowlingStyle,"
+finalString += "Matches," + "Innings," + "Notout," + "Runs," +"HighestScore," + "BattingAvg," + "BallsFaced," +"StrikeRate," + "Hundreds," + "Fiftys," + "Fours," + "Sixs," 
+finalString += "Matches," + "Innings," + "BallsBowled," + "Runs," + "Wickets," + "BBI," + "BBW," + "BowlingAvg," + "Economy," + "StrikeRate" +"\n"  
+
 for k in range(len(countriesList)):
     url = 'http://www.espncricinfo.com/' + countriesList[k].get('name') + '/content/player/country.html?country=' + str(countriesList[k].get('code'))
     res = requests.get(url)
@@ -59,7 +63,7 @@ for k in range(len(countriesList)):
         fours = Fiftys.next_sibling.next_sibling
         sixs = fours.next_sibling.next_sibling
 
-        finalString += matchs.getText().strip() + "," + innings.getText().strip() + "," + notout.getText().strip() + "," + runs.getText().strip() + highestscore.getText().strip() + "," + battingAvg.getText().strip() + "," + ballFaced.getText().strip() + "," + strikeRate.getText().strip() + "," + Hundreds.getText().strip() + "," + Fiftys.getText().strip() + "," + fours.getText().strip() + sixs.getText().strip() + ","
+        finalString += matchs.getText().strip() + "," + innings.getText().strip() + "," + notout.getText().strip() + "," + runs.getText().strip() + "," +highestscore.getText().strip() + "," + battingAvg.getText().strip() + "," + ballFaced.getText().strip() + "," + strikeRate.getText().strip() + "," + Hundreds.getText().strip() + "," + Fiftys.getText().strip() + "," + fours.getText().strip() + "," +sixs.getText().strip() + ","
 
         #bowling details
         details = soup.find_all(text="T20Is", limit=2)[1].parent.parent.parent.parent

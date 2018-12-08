@@ -1,7 +1,7 @@
 # pplscraper
 
-###### tec: </br>
-**python3** </br>
+###### tec: 
+**python3** 
 
-###### run the scraper </br>
+###### run the scraper
 **python3 finalScraper.py**

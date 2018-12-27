@@ -15,7 +15,7 @@ finalString += "Matches," + "Innings," + "BallsBowled," + "Runs," + "Wickets," +
 for k in range(len(countriesList)):
     url = 'http://www.espncricinfo.com/' + countriesList[k].get('name') + '/content/player/country.html?country=' + str(countriesList[k].get('code'))
     res = requests.get(url)
-    soup = bs4.BeautifulSoup(res.text)
+    soup = bs4.BeautifulSoup(res.text, features="html.parser")
 
     #allPlayersList of a particular country 
     allPlayersList = soup.select('div[id="rectPlyr_Playerlistt20"] table a')
@@ -26,7 +26,7 @@ for k in range(len(countriesList)):
         #particular player profile
         url = 'http://www.espncricinfo.com' + allPlayersList[i].get('href')
         res = requests.get(url)
-        soup = bs4.BeautifulSoup(res.text)
+        soup = bs4.BeautifulSoup(res.text, features="html.parser")
 
 
         #player details 
@@ -49,7 +49,7 @@ for k in range(len(countriesList)):
         finalString += country.strip() + "," + name.strip() + "," + age.strip() + "," + playingRole.strip() + "," + battingStyle.strip() + "," + bowlingStyle.strip() + ","
         
         #batting details
-        details = soup.find(text="T20Is").parent.parent.parent.parent
+        details = soup.find(text="T20Is").parent.parent
         matchs = details.next_sibling.next_sibling
         innings = matchs.next_sibling.next_sibling
         notout = innings.next_sibling.next_sibling
@@ -66,7 +66,7 @@ for k in range(len(countriesList)):
         finalString += matchs.getText().strip() + "," + innings.getText().strip() + "," + notout.getText().strip() + "," + runs.getText().strip() + "," +highestscore.getText().strip() + "," + battingAvg.getText().strip() + "," + ballFaced.getText().strip() + "," + strikeRate.getText().strip() + "," + Hundreds.getText().strip() + "," + Fiftys.getText().strip() + "," + fours.getText().strip() + "," +sixs.getText().strip() + ","
 
         #bowling details
-        details = soup.find_all(text="T20Is", limit=2)[1].parent.parent.parent.parent
+        details = soup.find_all(text="T20Is", limit=2)[1].parent.parent
         matchs = details.next_sibling.next_sibling
         innings = matchs.next_sibling.next_sibling
         balls = innings.next_sibling.next_sibling 

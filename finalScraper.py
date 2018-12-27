@@ -32,7 +32,7 @@ mycursor = db.cursor()
 for k in range(len(countriesList)):
     url = 'http://www.espncricinfo.com/' + countriesList[k].get('name') + '/content/player/country.html?country=' + str(countriesList[k].get('code'))
     res = requests.get(url)
-    soup = bs4.BeautifulSoup(res.text)
+    soup = bs4.BeautifulSoup(res.text, features="html.parser")
 
     #allPlayersList of a particular country 
     allPlayersList = soup.select('div[id="rectPlyr_Playerlistt20"] table a')
@@ -43,7 +43,7 @@ for k in range(len(countriesList)):
         #particular player profile
         url = 'http://www.espncricinfo.com' + allPlayersList[i].get('href')
         res = requests.get(url)
-        soup = bs4.BeautifulSoup(res.text)
+        soup = bs4.BeautifulSoup(res.text, features="html.parser")
 
 
         #player details 
@@ -65,7 +65,7 @@ for k in range(len(countriesList)):
        
                 
         #batting details
-        details = soup.find(text="T20Is").parent.parent.parent.parent
+        details = soup.find(text="T20Is").parent.parent
         matchsBT = details.next_sibling.next_sibling
         inningsBT = matchsBT.next_sibling.next_sibling
         notout = inningsBT.next_sibling.next_sibling
@@ -82,7 +82,7 @@ for k in range(len(countriesList)):
         stumpings = catches.next_sibling.next_sibling
 
         #bowling details
-        details = soup.find_all(text="T20Is", limit=2)[1].parent.parent.parent.parent
+        details = soup.find_all(text="T20Is", limit=2)[1].parent.parent
         matchsBL = details.next_sibling.next_sibling
         inningsBL = matchsBL.next_sibling.next_sibling
         ballsBowled = inningsBL.next_sibling.next_sibling 
@@ -107,7 +107,9 @@ for k in range(len(countriesList)):
             playingRole = "Wicketkeeper"
         if (playingRole.find("man") != -1):
             playingRole = "Batsman"        
-
+        
+        if (highestscore[-1] == "*"):
+            highestscore = highestscore[:-1]
        
         print("NO: ", count)
         count+=1
